@@ -4,10 +4,15 @@
     box-sizing: border-box;
 }
 
+/* ── Merged body rule (was defined twice) ── */
 body {
     font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    color: #333;
+    line-height: 1.7;
+    color: #2d3748;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 .container {
@@ -16,7 +21,7 @@ body {
     padding: 0 20px;
 }
 
-/* Header */
+/* ── Header ── */
 header {
     background: #2c5f2d;
     color: white;
@@ -46,30 +51,55 @@ nav ul {
     gap: 2rem;
 }
 
+/* ── Nav links (was defined twice, merged) ── */
 nav a {
     color: white;
     text-decoration: none;
+    position: relative;
+    padding-bottom: 6px;
     transition: color 0.3s;
 }
 
 nav a:hover {
-    color: #97bc62;
+    color: white;  /* kept white on hover as intended by the override */
 }
 
-/* Hero Section */
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #97bc62;
+    transition: width 0.3s ease-in-out;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* ── Hero Section ──
+   FIX: Removed external Unsplash fetch (was loading a 1920px image on every visit).
+   Pure CSS gradient is instant — zero network cost.
+   To add a background image, download it locally and use: url('../images/hero-bg.jpg')
+── */
 #hero {
-    background: linear-gradient(135deg, #2c5f2d, #97bc62);
+    background: linear-gradient(135deg, rgba(44, 95, 45, 0.98), rgba(151, 188, 98, 0.90));
     color: white;
-    padding: 150px 0 80px;
+    padding: 160px 0 100px;
     text-align: center;
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.05);
 }
 
 #hero h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Sections */
+/* ── Sections ── */
 section {
     padding: 60px 0;
 }
@@ -85,7 +115,7 @@ h2 {
     color: #2c5f2d;
 }
 
-/* About Section */
+/* ── About Section ── */
 .about-content {
     display: flex;
     gap: 3rem;
@@ -114,7 +144,7 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
-/* Research Grid */
+/* ── Research Grid (was defined twice, merged) ── */
 .research-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -127,11 +157,14 @@ h2 {
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .research-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+    border-color: #97bc62;
 }
 
 .research-item h3 {
@@ -139,7 +172,7 @@ h2 {
     margin-bottom: 1rem;
 }
 
-/* Publications */
+/* ── Publications ── */
 .publication-list {
     max-width: 800px;
     margin: 0 auto;
@@ -158,7 +191,7 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
-/* Contact */
+/* ── Contact ── */
 .contact-info {
     max-width: 600px;
     margin: 0 auto;
@@ -170,73 +203,7 @@ h2 {
     font-size: 1.1rem;
 }
 
-/* Footer */
-footer {
-    background: #2c5f2d;
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    nav ul {
-        gap: 1rem;
-    }
-    
-    #hero h2 {
-        font-size: 2rem;
-    }
-    
-    .about-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .research-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-body {
-    line-height: 1.7; 
-    color: #2d3748;
-}
-
-
-#hero {
-    
-    background: linear-gradient(135deg, rgba(44, 95, 45, 0.95), rgba(151, 188, 98, 0.85)), 
-                url('https://images.unsplash.com/photo-1586771107565-f6236b3303cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover !important;
-    color: white;
-    padding: 160px 0 100px;
-    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.05);
-}
-
-#hero h2 {
-    color: white !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    font-size: 3rem;
-}
-
-
-.research-item {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid #e2e8f0;
-}
-
-.research-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-    border-color: #97bc62;
-}
-
-
+/* ── Launch Button ── */
 .launch-btn {
     display: inline-block;
     margin-top: 20px;
@@ -250,42 +217,41 @@ body {
     box-shadow: 0 4px 6px rgba(44, 95, 45, 0.2);
 }
 
-.launch-btn:hover { 
-    background-color: #1a3b1a; 
-    transform: translateY(-2px); 
+.launch-btn:hover {
+    background-color: #1a3b1a;
+    transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(44, 95, 45, 0.3);
 }
 
-
-html {
-    scroll-behavior: smooth;
+/* ── Footer ── */
+footer {
+    background: #2c5f2d;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
 }
 
+/* ── Responsive Design ── */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
 
-nav a:hover {
-    color: white !important; 
-}
+    nav ul {
+        gap: 1rem;
+    }
 
+    #hero h2 {
+        font-size: 2rem;
+    }
 
-nav a {
-    position: relative;
-    padding-bottom: 6px; 
-    text-decoration: none;
-}
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
 
-
-nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #97bc62; 
-    transition: width 0.3s ease-in-out;
-}
-
-
-nav a:hover::after {
-    width: 100%;
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
 }
